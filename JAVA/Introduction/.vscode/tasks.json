@@ -1,0 +1,37 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "make *.class & make manifest",
+            "type": "shell",
+            "command": [
+                // javac -d . WelcomeToJava.java && echo Main-Class: WelcomeToJava > manifest.txt && jar -cvmf manifest.txt WelcomeToJava.jar WelcomeToJava.class
+                "javac",
+                "-d",
+                ".",
+                "${fileBasenameNoExtension}.java",
+                ";",
+                "echo",
+                "-n",
+                "'Main-Class: ${fileBasenameNoExtension}'",
+                ">",
+                "manifest.txt",
+            ],
+            "group": "build"
+        },
+        {
+            "label": "make *.jar",
+            "type": "shell",
+            "command": [
+                "jar",
+                "-cvmf",
+                "manifest.txt",
+                "${fileBasenameNoExtension}.jar",
+                "${fileBasenameNoExtension}.class"
+            ],
+            "group": "build"
+        },
+    ]
+}
